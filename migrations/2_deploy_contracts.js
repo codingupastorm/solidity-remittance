@@ -3,7 +3,6 @@ var Remittance = artifacts.require("./Remittance.sol");
 module.exports = function(deployer) {
   deployer.deploy(Remittance,
     web3.eth.accounts[1],
-    "0x0f35057082c0e94cb82f0135c5d2f1925bd6c9a4d285b0fe68cd132dfb30f773",
-    "0x7c0007d6a4d78c9ba13d467a66ab49a7b8f4a3dcf0d8f3c38e89b542ad62fbbf",
+    "0x4d0412f96db71b59f870c13d1dd57c528e1f0def2c2e7fe907282607cff416b2",
     {from:web3.eth.accounts[0], value:256});
 };

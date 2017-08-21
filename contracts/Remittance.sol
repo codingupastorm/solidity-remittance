@@ -5,10 +5,10 @@ contract Remittance {
     uint public amountHeld;
     bytes32 passHash;
 
-    function Remittance(address allowedWithdrawer, bytes32 passHash1, bytes32 passHash2) payable {
+    function Remittance(address allowedWithdrawer, bytes32 pHash) payable {
         withdrawer = allowedWithdrawer;
         amountHeld = msg.value;
-        passHash = keccak256(passHash1, passHash2);
+        passHash = pHash;
     }
 
     function withdraw(bytes32 passHash1, bytes32 passHash2) payable returns(bool){
