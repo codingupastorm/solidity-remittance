@@ -12,9 +12,8 @@ contract('Remittance', function(accounts) {
           "0x7c0007d6a4d78c9ba13d467a66ab49a7b8f4a3dcf0d8f3c38e89b542ad62fbbf",
           {from: carol});
     }).then(function(tx) {
+      //need to check the balance difference + account for gas!
       console.log(web3.eth.getBalance(carol).toNumber());
-      // assert.equal(web3.eth.getBalance(carol).toNumber(),
-      // carolBalance + afterSplit, "Balance didn't increase by " + afterSplit);
     });
   });
 });
