@@ -12,9 +12,10 @@ contract Remittance {
     }
 
     function withdraw(bytes32 passHash1, bytes32 passHash2) payable returns(bool){
-      if (msg.sender != withdrawer) throw;
-      if (passHash != keccak256(passHash1, passHash2)) throw;
+      require(msg.sender == withdrawer);
+      require(passHash == keccak256(passHash1, passHash2));
       withdrawer.send(amountHeld);
+      amountHeld = 0;
       return true;
     }
 }
