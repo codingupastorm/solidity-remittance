@@ -23,7 +23,7 @@ contract Remittance {
       owner = msg.sender;
     }
 
-    function createNew(address to, bytes32 pHash, uint duration) payable returns (bool) {
+    function createNew(address to, bytes32 pHash, uint duration) public payable returns (bool) {
         require(remittances[pHash].amount == 0); // pass has not been used before
         require(msg.value > 0);
         require(duration <= maxDeadlineDuration);
@@ -32,8 +32,8 @@ contract Remittance {
         return true;
     }
 
-    function claim(bytes32 passHash1, bytes32 passHash2) payable returns(bool){
-      RemittanceStruct remittance = remittances[keccak256(passHash1, passHash2)];
+    function claim(bytes32 passHash1, bytes32 passHash2) public returns(bool){
+      RemittanceStruct storage remittance = remittances[keccak256(passHash1, passHash2)];
       require(remittance.amount > 0); // is existing
       require(!remittance.claimed);
       require(remittance.recipient == msg.sender);
@@ -44,8 +44,8 @@ contract Remittance {
       return true;
     }
 
-    function claimRefund(bytes32 passHash1, bytes32 passHash2) payable returns(bool){
-      RemittanceStruct remittance = remittances[keccak256(passHash1, passHash2)];
+    function claimRefund(bytes32 passHash1, bytes32 passHash2) public returns(bool){
+      RemittanceStruct storage remittance = remittances[keccak256(passHash1, passHash2)];
       require(remittance.amount > 0); // is existing
       require(!remittance.claimed);
       require(remittance.owner == msg.sender);
