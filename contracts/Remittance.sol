@@ -42,7 +42,7 @@ contract Remittance is Owned {
 
     function claimRefund(bytes32 pHash) public returns(bool){
       RemittanceStruct storage remittance = remittances[pHash];
-      require(remittance.amount > 0); // is existing
+      require(remittance.amount > 0);
       require(remittance.owner == msg.sender);
       require(remittance.deadline <= block.number);
       uint toSend = remittance.amount;
