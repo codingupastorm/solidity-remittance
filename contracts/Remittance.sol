@@ -6,7 +6,7 @@ contract Remittance is Owned {
 
     struct RemittanceStruct{
       uint amount;
-      address recipient;
+      bytes32 recipientHidden;
       address owner;
       uint deadline;
     }
@@ -19,7 +19,7 @@ contract Remittance is Owned {
     event LogRemittanceRefunded(address indexed caller, uint256 amount);
     event LogKilled();
 
-    function createNew(address to, bytes32 pHash, uint duration) public payable returns (bool) {
+    function createNew(bytes32 to, bytes32 pHash, uint duration) public payable returns (bool) {
         require(remittances[pHash].owner == address(0)); // pass has not been used before
         require(msg.value > 0);
         require(duration <= maxDeadlineDuration);
@@ -30,7 +30,7 @@ contract Remittance is Owned {
 
     function claim(bytes32 passHash1, bytes32 passHash2) public returns(bool){
       RemittanceStruct storage remittance = remittances[keccak256(passHash1, passHash2)];
-      require(remittance.recipient == msg.sender);
+      require(remittance.recipient == keccak256(msg.sender));
       require(remittance.amount > 0);
       require(remittance.deadline >= block.number);
       uint toSend = remittance.amount;
